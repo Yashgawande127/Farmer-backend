@@ -10,9 +10,16 @@ class SocketManager {
     }
 
     init(server) {
+        const allowedOrigins = [
+            'http://localhost:3000',
+            'https://farmer-frontend-nu.vercel.app',
+            process.env.FRONTEND_URL,
+            process.env.CORS_ORIGIN
+        ].filter(Boolean);
+
         this.io = new Server(server, {
             cors: {
-                origin: process.env.FRONTEND_URL || "http://localhost:3000",
+                origin: allowedOrigins,
                 methods: ["GET", "POST"],
                 credentials: true
             },
